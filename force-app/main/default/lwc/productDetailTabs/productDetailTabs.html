@@ -1,0 +1,55 @@
+<template>
+  <template if:true={selectedProduct}>
+    <lightning-tabset variant="scoped">
+      <lightning-tab label="Details">
+        <lightning-card
+          title={selectedProduct.Name}
+          icon-name="standard:product"
+        >
+          <lightning-button
+            label="Full Details"
+            onclick={navigateToViewRecordPage}
+            slot="actions"
+          ></lightning-button>
+          <lightning-button
+            label="Edit Product"
+            onclick={navigateToEditRecordPage}
+            slot="actions"
+            class="custom-button2"
+          ></lightning-button>
+          <div class="slds-p-around_medium">
+            <div class="slds-text-color_default custom-font">
+              Type: {selectedProduct.RecordType.Name}
+            </div>
+            <div class="slds-text-color_default custom-font">
+              Category: {selectedProduct.category__c}
+            </div>
+            <div class="slds-text-color_default custom-font">
+              Capacity: {selectedProduct.capacity__c}
+            </div>
+
+            <div class="slds-text-color_default custom-font">
+              Views: {selectedProduct.views__c}
+            </div>
+            <div class="slds-text-color_default custom-font">
+              Options: {selectedProduct.Options_available__c}
+            </div>
+            <lightning-output-field
+              field-name="Description"
+              variant="label-hidden"
+            ></lightning-output-field>
+          </div>
+        </lightning-card>
+      </lightning-tab>
+      <lightning-tab label="Add Review">
+        <c-product-add-review-form
+          test-id={productId}
+          onreviewadded={handleReviewAdded}
+        ></c-product-add-review-form>
+      </lightning-tab>
+      <lightning-tab label="Reviews" value="reviews">
+        <c-product-reviews test-id={productId}></c-product-reviews>
+      </lightning-tab>
+    </lightning-tabset>
+  </template>
+</template>

@@ -1,0 +1,74 @@
+<apex:page applyHtmlTag="false" applyBodyTag="false"
+showHeader="false" sidebar="false" standardStylesheets="false" controller="AcceuilController" docType="html-5.0" >
+<html>
+    <head>
+        <title>Page D'acceui</title>
+        <apex:stylesheet value="{!URLFOR($Resource.myStyles, 'style.css')}"/>
+    </head>
+    <body>
+   <script>
+        function changeVisibility(button, textid) {
+          if(button.onclick){
+                document.getElementById(textid).style.visibility = "visible";}
+           else if (button.ondblclick){
+                document.getElementById(textid).style.visibility = "hidden";
+           }
+           
+        }
+    </script> 
+    <div  class="backgcss">
+   <apex:form >
+    <!-- to selecte type of product
+    <apex:outputPanel layout="block">
+        <h3> choose type of product</h3>
+        <input id="checkbox" type="checkbox"
+            onclick="changeVisibility(this,'{!$Component.bedroom}');"/>
+            <label for="checkboxbed">Bedroom.</label>
+            <input id="checkboxmeeting" type="checkbox"
+                onclick="changeVisibility(this,'{!$Component.meetingroom}');"/>
+            <label for="checkboxmeeting">Meeting Room:</label>
+    </apex:outputPanel > -->
+    <div class="formcss">
+    <apex:outputPanel id="bedroom" >
+    <apex:outputPanel layout="block">
+    <apex:outputLabel styleClass="elmlabelcss" >Product Type:</apex:outputLabel>
+    <apex:selectList value="{!selectedType}" multiselect="false" size="1" required="true" styleClass="elminputcss">
+    <apex:selectOptions value="{!items}"/> 
+    </apex:selectList>
+    <apex:outputLabel styleClass="elmlabelcss" >Capacity :</apex:outputLabel>
+    <apex:input type="number" value="{!Capacity}" required="true" styleClass="elminputcss"/><br/>
+    <apex:outputLabel for="strdate" styleClass="elmlabelcss" >Start Date &nbsp;&nbsp;&nbsp;&nbsp;:</apex:outputLabel>
+    <apex:input type="datetime-local" value="{!startDate}" id="strdate" required="true" styleClass="elminputcss"/>
+    <apex:outputLabel for="enddate" styleClass="elmlabelcss" >End Date:</apex:outputLabel>
+    <apex:input styleClass="elminputcss" type="datetime-local" value="{!endDate}"  id="enddate" required="true"/><br/>
+    <apex:commandButton action="{!searchBedroom}" value="Check Disponibility" reRender="dataWrapperPanel,bedroom" lang="End Date" />
+   <br/>
+    </apex:outputPanel>
+  </apex:outputPanel>
+</div>
+      <!-- if product is Meeting room
+    <apex:outputPanel id="meetingroom" layout="block" style="visibility:hidden" >
+   Meeting Date: <apex:input type="datetime-local" value="{!meetingDate}"/><br/>
+   Meeting Duration (in hours):<apex:input type="number" value="{!meetingDuration}"/><br/>
+   Capacity :<apex:input type="number" value="{!Capacity}"/><br/>
+   <apex:commandButton action="{!searchMeetingRoom}" value="Check Disponibility" reRender="dataWrapperPanel" lang="End Date"/><br/>
+    </apex:outputPanel> -->
+   <apex:outputPanel id="dataWrapperPanel">
+      <apex:pageBlock title="Account List" id="dataBlock" rendered="{!showResult}">
+          <apex:pageBlockSection >
+              <apex:pageBlockTable value="{!prodList}" var="pro" >
+                  <apex:column value="{!pro.Name}"/>
+                  <apex:column value="{!pro.category__c}"/>
+                  <apex:column value="{!pro.RecordType.Name}"/>
+                  <apex:column value="{!pro.capacity__c}"/>
+    </apex:pageBlockTable>
+          </apex:pageBlockSection> 
+      </apex:pageBlock>
+      <apex:outputLabel id="noRecFound" rendered="{! blnNoResultFound }">No Record Found !!!</apex:outputLabel>
+    </apex:outputPanel>
+
+ </apex:form>
+</div>
+</body>
+ </html> 
+</apex:page>

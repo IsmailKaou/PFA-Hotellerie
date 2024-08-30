@@ -1,0 +1,18 @@
+<apex:page showHeader="false" applyBodyTag="false" >
+    <style type="text/css">
+      body {
+    background-color:#ffffcc;       
+    font-family:verdana;        
+      }
+      p { font-weight: bold; }
+        .asideText { font-style: italic;}
+    </style>
+    <body>
+        
+    <p>This is some strong text!</p>
+    <apex:outputText style="font-weight: bold;"
+        value="This text is styled directly."/>
+    <apex:outputText styleClass="asideText"
+        value="This text is styled via a stylesheet class."/>
+    </body>
+</apex:page>

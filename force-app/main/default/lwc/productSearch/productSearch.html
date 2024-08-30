@@ -1,0 +1,31 @@
+<template>
+  <lightning-layout multiple-rows class="container">
+    <!-- Top -->
+    <lightning-layout-item size="12">
+      <lightning-card title="Filter Hotel Products">
+        <p class="slds-var-p-horizontal_small">
+          <c-product-search-form 
+            onsearch={searchProducts}
+            oncheckavailability={handleCheckAvailability}
+            onmeetingroomcheckavailability={handleMeetingRoomCheckAvailability}
+          ></c-product-search-form>
+        </p>
+      </lightning-card>
+    </lightning-layout-item>
+    <!-- Bottom -->
+    <lightning-layout-item >
+      <template if:true={isLoading}>
+        <lightning-spinner
+          alternative-text="Loading"
+          variant="brand"
+        ></lightning-spinner>
+      </template>
+
+      <!-- Results -->
+      <c-product-search-results
+        onloading={handleLoading}
+        ondoneloading={handleDoneLoading}
+      ></c-product-search-results>
+    </lightning-layout-item>
+  </lightning-layout>
+</template>

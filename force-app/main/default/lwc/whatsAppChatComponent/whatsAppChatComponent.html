@@ -1,0 +1,231 @@
+<template>
+  <template if:true={phoneNumberExist}>
+    <lightning-card>
+      <section
+        role="log"
+        class="chat-area slds-chat slds-scrollable"
+        style="height: 400px; margin: 12px"
+      >
+        <template if:true={showChat}>
+          <ul class="slds-chat-list">
+            <template for:each={messages} for:item="message">
+              <li
+                if:true={message.Outgoing__c}
+                key={message.Id}
+                class="slds-chat-listitem slds-chat-listitem_outbound"
+              >
+                <template lwc:if={message.isFile__c}>
+                  <!-- {selectedFileDetails.Title} -->
+                  <c-preview-file-modal
+                    url={message.downloadUrl__c}
+                    file-extension={message.Extension__c}
+                  ></c-preview-file-modal>
+                  <div
+                    class="slds-col slds-var-p-vertical_x-small slds-small-size_1-of-2"
+                  >
+                    <div
+                      class="slds-file slds-file_card slds-has-title"
+                      style="width: 14rem"
+                      onclick={navigateToPdfPreview}
+                    >
+                      <figure>
+                        <a
+                          class="slds-file__crop slds-file__crop_4-by-3 slds-m-top_x-small"
+                        >
+                          <img
+                            src={message.thumbnailFileCard__c}
+                            alt={message.title__c}
+                          />
+                        </a>
+                        <figcaption
+                          class="slds-file__title slds-file__title_card"
+                        >
+                          <div
+                            class="slds-media slds-media_small slds-media_center"
+                          >
+                            <lightning-icon
+                              icon-name={iconName}
+                              alternative-text={message.title__c}
+                              title={message.title__c}
+                              size="xx-small"
+                            >
+                              <span class="slds-assistive-text"
+                                >{message.title__c}.{message.Extension__c}</span
+                              >
+                            </lightning-icon>
+                            <div
+                              class="slds-media__body slds-var-p-left_xx-small"
+                            >
+                              <span
+                                class="slds-file__text slds-truncate"
+                                title={message.title__c}
+                                >{message.title__c}.{message.Extension__c}</span
+                              >
+                            </div>
+                          </div>
+                        </figcaption>
+                      </figure>
+                    </div>
+                  </div>
+                </template>
+
+                <template lwc:else>
+                  <div class="slds-chat-message">
+                    <div class="slds-chat-message__body">
+                      <div
+                        class="slds-chat-message__text slds-chat-message__text_outbound"
+                      >
+                        <span
+                          ><lightning-formatted-rich-text
+                            value={message.MessageContent__c}
+                          >
+                          </lightning-formatted-rich-text
+                        ></span>
+                      </div>
+                      <div class="slds-chat-message__meta">
+                        {message.formattedDate}
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </li>
+              <li
+                if:false={message.Outgoing__c}
+                key={message.Id}
+                class="slds-chat-listitem slds-chat-listitem_inbound"
+              >
+                <div class="slds-chat-message">
+                  <span
+                    aria-hidden="true"
+                    class="slds-avatar slds-avatar_circle slds-chat-avatar"
+                  >
+                    <abbr
+                      class="slds-avatar__initials slds-avatar__initials_inverse"
+                      title="Andy Martinez"
+                      >{clientLogo}</abbr
+                    >
+                  </span>
+                  <div class="slds-chat-message__body">
+                    <div
+                      class="slds-chat-message__text slds-chat-message__text_inbound"
+                    >
+                      <span>
+                        <lightning-formatted-rich-text
+                          value={message.MessageContent__c}
+                        >
+                        </lightning-formatted-rich-text>
+                      </span>
+                    </div>
+                    <div class="slds-chat-message__meta">
+                      {message.formattedDate}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </template>
+          </ul>
+        </template>
+        <template if:false={showChat}>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              height: 80%;
+              justify-content: center;
+            "
+          >
+            <!-- create an message to the agent to inform it that no chat messages with the current client with bold text -->
+
+            <lightning-formatted-text
+              value="No Chat History with this Client"
+              class="slds-text-heading_medium"
+            >
+            </lightning-formatted-text>
+          </div>
+        </template>
+
+        <div
+          style="width: 95%; display: flex; flex-direction: column; gap: 4px"
+        >
+          <div
+            style="
+              padding-right: 2px;
+              border: 1px solid #898989;
+              border-radius: 5px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 6px;
+            "
+          >
+            <lightning-input
+              class="chat-input"
+              type="text"
+              value={messageContent}
+              onchange={handleChatInput}
+              placeholder="Message"
+              message-when-value-missing="Please enter a message."
+              required
+              label="Send Message"
+              variant="label-hidden"
+              style="width: 95%"
+            >
+            </lightning-input>
+
+            <lightning-button-icon
+              icon-name="utility:attach"
+              variant="bare"
+              alternative-text="Attach"
+              onclick={toggleAttachFile}
+            >
+            </lightning-button-icon>
+            <lightning-button-icon
+              icon-name="utility:send"
+              variant="bare"
+              alternative-text="Send"
+              onclick={sendMessage}
+            ></lightning-button-icon>
+          </div>
+
+          <template if:true={showFileOptions}>
+            <div
+              style="
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+              "
+            >
+              <lightning-combobox
+                style="width: 95%"
+                name="fileSelection"
+                label="Select a file to send"
+                value={selectedFile}
+                options={fileOptions}
+                onchange={handleFileChange}
+              ></lightning-combobox>
+
+              <!-- <lightning-button-icon
+              icon-name="utility:send"
+              variant="bare"
+              alternative-text="Send"
+              onclick={sendMessage}
+            ></lightning-button-icon> -->
+            </div>
+          </template>
+        </div>
+      </section>
+    </lightning-card>
+  </template>
+  <template if:false={phoneNumberExist}>
+    <lightning-card>
+      <div style="padding: 10px; text-align: center">
+        <lightning-formatted-text
+          value="Please add a phone number to the client to start a chat."
+          class="slds-text-heading_medium"
+        >
+        </lightning-formatted-text>
+      </div>
+    </lightning-card>
+  </template>
+</template>

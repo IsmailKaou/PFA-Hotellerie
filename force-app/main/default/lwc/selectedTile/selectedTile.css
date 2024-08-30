@@ -1,0 +1,5 @@
+.container {
+    display: flex;/* display: flex;: Cette propriété CSS est utilisée pour définir le comportement de l'élément en tant que conteneur flexible. En utilisant la valeur flex, l'élément devient un conteneur flex qui permet de contrôler le positionnement et le dimensionnement de ses enfants.*/
+    flex-direction: row;/*flex-direction: row;: Cette propriété CSS est utilisée pour définir la direction principale des éléments enfants du conteneur flex. En utilisant la valeur row, les éléments enfants sont disposés horizontalement dans une ligne.*/
+    flex-wrap: wrap;/*flex-wrap: wrap;: Cette propriété CSS est utilisée pour spécifier si les éléments enfants doivent être enveloppés sur plusieurs lignes lorsque l'espace horizontal est insuffisant. En utilisant la valeur wrap, les éléments enfants peuvent être enveloppés sur plusieurs lignes si nécessaire.*/
+}

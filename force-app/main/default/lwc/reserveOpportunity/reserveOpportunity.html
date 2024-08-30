@@ -1,0 +1,211 @@
+<template>
+  <lightning-card if:true={productsSelected.length}>
+    <h3 slot="title">Make Reservation</h3>
+    <div slot="footer"></div>
+
+    <div class="slds-p-horizontal_small">
+      <div class="slds-m-top_medium slds-m-bottom_x-large">
+        <div class="slds-p-around_medium lgc-bg" if:true={visibilityCheck}>
+          <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+            Check if contact exists:
+          </h2>
+          <lightning-combobox
+            label="Choose your Identifier"
+            class="slds-align-middle"
+            value={idCard}
+            required="true"
+            options={idNumberOptions}
+            onchange={handelChangeIDcard}
+          ></lightning-combobox>
+          <lightning-input
+            type="text"
+            label="Enter ID Number"
+            value={idNumber}
+            required="true"
+            onchange={handelChangeIDnumber}
+          ></lightning-input>
+          <br />
+          <lightning-button
+            label="Check"
+            onclick={handelClickChecking}
+            variant="brand"
+          ></lightning-button>
+          <br />
+          <div class="slds-text-color_error">{messageErreur}</div>
+          <br />
+        </div>
+        <h3 class="slds-text-heading_medium slds-m-bottom_medium">
+          Contact Name: {contactName}
+        </h3>
+        <div if:true={visibilityButtoncreCon}>
+          <lightning-button
+            label="Create New Contact"
+            onclick={handelButtonCreateContact}
+            variant="brand"
+          ></lightning-button>
+        </div>
+        <div class="slds-var-p-around_x-small lgc-bg" if:true={visibilityCont}>
+          <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+            Create New Contact:
+          </h2>
+          <div class="slds-var-p-around_x-small lgc-bg">
+            <lightning-input
+              value={recContact.FirstName}
+              label="First Name"
+              required="true"
+              onchange={handelFirstNamechange}
+            ></lightning-input>
+            <lightning-input
+              value={recContact.LastName}
+              label="Last Name"
+              required="true"
+              onchange={handelLasteNamechange}
+            ></lightning-input>
+            <lightning-combobox
+              value={recContact.ID_card__c}
+              label="Choose your Identifier"
+              onchange={handelIdIentifierchange}
+              class="slds-align-middle"
+              required="true"
+              options={idNumberOptions}
+            ></lightning-combobox>
+            <lightning-input
+              value={recContact.ID_number__c}
+              label="ID Number"
+              required="true"
+              onchange={handelIdNumberchannge}
+            ></lightning-input>
+
+            <br />
+            <lightning-button
+              label="Save New Contact"
+              onclick={createConRec}
+              variant="brand"
+            ></lightning-button>
+          </div>
+        </div>
+        <div class="slds-var-p-around_x-small lgc-bg" if:true={visibilityRes}>
+          <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+            Create New Reservation:
+          </h2>
+          <div class="slds-var-p-around_x-small lgc-bg">
+            <lightning-input
+              value={recOppo.Name}
+              label="Reservation Name"
+              required="true"
+              onchange={handelReservationNamechange}
+            ></lightning-input>
+            <lightning-input
+              value={recOppo.time_of_reservation__c}
+              type="datetime"
+              min={dateCurrentmoins}
+              max={dateCurrentPlus}
+              message-when-range-underflow={actualDate}
+              message-when-range-overflow={actualDate}
+              label="Time of reservation"
+              onchange={handelResevationTimechange}
+            ></lightning-input>
+            <lightning-input
+              value={recOppo.Check_in_date__c}
+              type="datetime-local"
+              label="Check-in Date"
+              min={currentDateTime}
+              onchange={handelStartDatechange}
+            ></lightning-input>
+            <lightning-input
+              value={recOppo.Check_out_date__c}
+              type="datetime-local"
+              label="Check-out Date"
+              min={minEnddate}
+              onchange={handelEndDatechange}
+            ></lightning-input>
+            <lightning-input
+              value={recOppo.CloseDate}
+              type="date"
+              label="Close Date"
+              min={mindateClose}
+              onchange={handelCloseDatechange}
+            ></lightning-input>
+            <lightning-combobox
+              value={recOppo.StageName}
+              label="Stage"
+              required="true"
+              class="slds-align-middle"
+              options={stageOptions}
+              onchange={handelStageChange}
+            ></lightning-combobox>
+
+            <br />
+            <lightning-button
+              label="Save New Reservation"
+              onclick={createOppRec}
+              variant="brand"
+            ></lightning-button>
+            <br />
+            <div class="slds-text-color_error">{messageErreur}</div>
+          </div>
+        </div>
+        <div class="slds-var-p-around_x-small lgc-bg" if:true={visibilityRes}>
+          <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+            Chat with client:
+          </h2>
+          <c-whats-app-chat-component></c-whats-app-chat-component>
+        </div>
+        <div
+          class="slds-var-p-around_x-small slds-text-align_center lgc-bg"
+          if:true={visibilityConfirm}
+        >
+          <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+            Would you like to confirm your reservation?
+          </h2>
+          <div class="slds-text-align_center">
+            Note: Please select all the products you wish to reserve, as after
+            confirmation, you will not be able to change the list of products to
+            be reserved.
+          </div>
+          <br />
+
+          <div
+            class="slds-text-align_center slds-no-flex slds-m-around_x-small"
+          >
+            <button class="slds-button slds-button_brand" onclick={clickConfim}>
+              Confirm
+            </button>
+            <button class="slds-button slds-button_brand" onclick={clickCancel}>
+              Cancel
+            </button>
+          </div>
+          <h2 class="slds-text-heading_medium slds-m-bottom_medium"></h2>
+          <br />
+        </div>
+        <div
+          class="slds-var-p-around_x-small lgc-bg"
+          if:true={visibilityReturn}
+        >
+          <br />
+          <div class="lds-text-align_center">
+            <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+              Reservation Summary
+            </h2>
+
+            <div>Reservation Status: Successful</div>
+            <div>Reservation Name: {reservationName}</div>
+            <div>Number of Products: {nombreProduit}</div>
+
+            <br />
+            <div>
+              <button
+                class="slds-button slds-button_success"
+                onclick={clickReturn}
+              >
+                Finish
+              </button>
+            </div>
+            <br />
+            <h2 class="slds-text-heading_medium slds-m-bottom_medium"></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </lightning-card>
+</template>

@@ -1,0 +1,14 @@
+<template>
+  <div class="slds-form-element">
+    <h1>Add Review</h1>
+    <lightning-textarea
+      label="Write your review"
+      value={reviewText}
+      onchange={handleReviewTextChange}
+    ></lightning-textarea>
+    <lightning-button
+      label="Save Review"
+      onclick={handleSaveReview}
+    ></lightning-button>
+  </div>
+</template>

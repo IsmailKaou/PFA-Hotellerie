@@ -1,0 +1,55 @@
+.custom-box {
+    background-color: #d8dcba;
+}
+.c-container {
+    display: flex;/* display: flex;: Cette propriété CSS est utilisée pour définir le comportement de l'élément en tant que conteneur flexible. En utilisant la valeur flex, l'élément devient un conteneur flex qui permet de contrôler le positionnement et le dimensionnement de ses enfants.*/
+    flex-direction: row;/*flex-direction: row;: Cette propriété CSS est utilisée pour définir la direction principale des éléments enfants du conteneur flex. En utilisant la valeur row, les éléments enfants sont disposés horizontalement dans une ligne.*/
+    flex-wrap: wrap;/*flex-wrap: wrap;: Cette propriété CSS est utilisée pour spécifier si les éléments enfants doivent être enveloppés sur plusieurs lignes lorsque l'espace horizontal est insuffisant. En utilisant la valeur wrap, les éléments enfants peuvent être enveloppés sur plusieurs lignes si nécessaire.*/
+    background-color: #f5f6f4;
+    justify-content: space-around;
+    gap: 5px;
+
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1px;
+    border: 1px solid rgb(209, 209, 209);
+    border-radius: 5px 5px 5px 5px;
+  }
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 1px;
+    border: 1px solid rgb(209, 209, 209);
+    border-radius: 5px 5px 5px 5px;
+  }
+  .image {
+    background-color: black;
+    width: 100%;
+    height: 220px;
+    padding: 1px !important;
+    background-position: center;
+    background-size: cover;
+    /* border-radius: 5px; */
+    border-radius: 5px 5px 0px 0px;
+   
+  }
+  .category {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3px;
+  }
+  
+  .selected {
+    border: 3px solid #583101;
+    border-radius: 5px;
+  }
+  
+  .tile-wrapper {
+    cursor: pointer;
+    padding: 5px;
+  }

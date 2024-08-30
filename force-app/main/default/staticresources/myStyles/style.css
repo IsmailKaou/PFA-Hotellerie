@@ -1,0 +1,66 @@
+ /* Style pour le corps de la page */
+ body {
+    margin: 0;
+    padding: 0;
+    background-color:rgb(242, 223, 195);
+ }
+
+/* Style pour le conteneur */
+.backgcss {
+    background-image: url('acceuil/acceuil.jpg'); 
+    background-size:100% auto; 
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 90vh; /* pour couvrir toute la hauteur de l'écran  */
+    /*margin-top: 5vh;  Marge en haut pour l'espace vide en haut */
+    /*margin-bottom: 10vh; /* Marge en bas pour l'espace vide en bas */
+    display: flex;
+    width: 100%;
+    max-width: 1200px; /* Optional: Set a maximum width for large screens */
+    margin: 0 auto; /* Center the container */
+    /*flex-direction: column;
+    /*justify-content: center;Centre horizontalement */
+    /*align-items: center;Centre verticalement */
+    /*text-align: center;*/
+}
+
+.formcss{
+    margin:35% 20% 25%;
+    background-color:rgb(100, 66, 16);
+    width: 600;
+    height: 300;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+ 
+
+
+}
+.elmlabelcss{
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    font-size: 20px;
+ 
+
+}
+.elminputcss{
+    width:300px;
+    height:30px;
+    font-size: 18px; 
+    background-color: rgba(23, 22, 6, 0.493);
+    color:white; 
+    margin:3px;
+    border: 1px solid white;
+    border-radius: 5px;
+    }
+.cont2{
+    color: #ffffff; /* Couleur du texte */
+    background-color: rgba(0, 0, 0, 0.5); /* Couleur de fond du titre avec transparence */
+    padding: 20px;
+    font-family:serif;
+    margin-bottom: 70vh;
+    
+}
+
+
+

@@ -1,0 +1,3 @@
+<apex:page controller="PageControllor">
+        <apex:outputText value="Query Parameter Value: {!paramValue}" />
+</apex:page>

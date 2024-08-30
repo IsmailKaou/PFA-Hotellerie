@@ -1,0 +1,125 @@
+<template>
+  <template if:false={isProductReviews}>
+    <div class="slds-align_absolute-center slds-scrollable_y no-reviews">
+      No reviews available
+    </div>
+  </template>
+  <template if:true={isProductReviews}>
+    <div class="slds-feed reviews-style slds-is-relative slds-scrollable_y">
+      <template if:true={isLoading}>
+        <lightning-spinner
+          alternative-text="Loading"
+          size="small"
+          variant="brand"
+        ></lightning-spinner>
+      </template>
+      <ul class="slds-feed__list">
+        <template for:each={productReviews} for:item="productReview">
+          <!-- <li class="slds-feed__item" key={productReview.Id}>
+            <article class="slds-post">
+              <header class="slds-post__header slds-media">
+                <div class="slds-media__body">
+                  <div class="profile">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      stroke="#212b36"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    >
+                      <circle cx="12" cy="8" r="5" />
+                      <path d="M3,21 h18 C 21,12 3,12 3,21" />
+                    </svg>
+                    <a
+                      title={productReview.CreatedBy.Name}
+                      onclick={navigateToRecord}
+                      data-record-id={productReview.CreatedById}
+                    >
+                      {productReview.CreatedBy.Name}
+                    </a>
+                  </div>
+                </div>
+              </header>
+              <div class="slds-text-longform" style="margin-left: 10px">
+                <p class="slds-text-title_caps">
+                  {productReview.Review_Subject__c}
+                </p>
+                <p class="slds-text-body_small">
+                  <lightning-formatted-date-time
+                    value={productReview.LastModifiedDate}
+                  ></lightning-formatted-date-time>
+                </p>
+                <lightning-formatted-rich-text
+                  value={productReview.Comment__c}
+                ></lightning-formatted-rich-text>
+              </div>
+              <c-five-star-rating
+                value={productReview.Rating__c}
+                read-only="true"
+              ></c-five-star-rating>
+            </article>
+          </li> -->
+          <li class="slds-feed__item review" key={productReview.Id}>
+            <article class="slds-post">
+              <header
+                class="slds-post__header slds-media"
+                style="display: flex; align-items: center"
+              >
+                <div class="slds-media__figure">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    stroke="#212b36"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    fill="none"
+                  >
+                    <circle cx="12" cy="8" r="5" />
+                    <path d="M3,21 h18 C 21,12 3,12 3,21" />
+                  </svg>
+                </div>
+                <div class="slds-media__body">
+                  <div
+                    class="slds-grid slds-grid_align-spread slds-has-flexi-truncate"
+                  >
+                    <p>
+                      <a
+                        title={productReview.CreatedBy.Name}
+                        onclick={navigateToRecord}
+                        data-record-id={productReview.CreatedById}
+                      >
+                        {productReview.CreatedBy.Name}
+                      </a>
+                    </p>
+                  </div>
+                  <p class="slds-text-body_small">
+                    <lightning-formatted-date-time
+                      value={productReview.LastModifiedDate}
+                    ></lightning-formatted-date-time>
+                  </p>
+                </div>
+              </header>
+              <div class="slds-text-longform">
+                <p class="slds-text-title_caps">
+                  {productReview.Review_Subject__c}
+                </p>
+                <lightning-formatted-rich-text
+                  value={productReview.Comment__c}
+                ></lightning-formatted-rich-text>
+              </div>
+              <c-five-star-rating
+                value={productReview.Rating__c}
+                read-only="true"
+              ></c-five-star-rating>
+            </article>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </template>
+</template>

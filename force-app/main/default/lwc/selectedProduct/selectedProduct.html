@@ -1,0 +1,129 @@
+<template>
+  <article class="slds-card">
+    <div class="slds-card__header slds-grid">
+      <header class="slds-media slds-media_center slds-has-flexi-truncate">
+        <div class="slds-media__body">
+          <h2 class="slds-card__header-title">
+            <div
+              class="slds-card__header-link slds-truncate"
+              title="Products Selected"
+            >
+              <span>Products Selected</span>
+            </div>
+          </h2>
+        </div>
+
+        <!--<div class="slds-no-flex slds-m-around_x-small">
+          <button
+            class="slds-button slds-button_brand"
+            onclick={extractProduct}
+            title="Extract the element from the list"
+          >
+            Extract
+          </button>
+        </div>
+        <div class="slds-no-flex slds-m-around_x-small">
+          <button class="slds-button slds-button_brand" onclick={cancelAll}>
+            Cancel
+          </button>
+        </div>-->
+      </header>
+    </div>
+    <div class="slds-card__body slds-card__body_inner">
+      <template if:true={productsSelected.length}>
+        <table
+          class="slds-table slds-table_cell-buffer slds-table_bordered"
+          aria-labelledby="element-with-table-label other-element-with-table-label"
+        >
+          <thead>
+            <tr class="slds-line-height_reset">
+              <th class="c-colonne" scope="col">
+                <div class="slds-truncate" title=""></div>
+              </th>
+              <th class="c-colonne" scope="col">
+                <div class="slds-truncate" title="Product Type">
+                  Product Type
+                </div>
+              </th>
+              <th class="c-colonne" scope="col">
+                <div class="slds-truncate" title="Product Name">
+                  Product Name
+                </div>
+              </th>
+              <th class="c-colonne" scope="col">
+                <div class="slds-truncate" title="Category">Category</div>
+              </th>
+              <th class="c-colonne" scope="col">
+                <div class="slds-truncate" title="Capacity">Capacity</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <template for:each={productsSelected} for:item="product">
+              <tr class="c-colomn slds-hint-parent" key={product.Id}>
+                <!--il est important de mettre key lorsqu'on a une boucle for-->
+                <td
+                  class="slds-text-align_right slds-cell_action-mode"
+                  role="gridcell"
+                >
+                  <div class="slds-checkbox">
+                    <input
+                      type="checkbox"
+                      name="options"
+                      id={product.Id}
+                      value={product.Id}
+                      tabindex="0"
+                      aria-labelledby={product.Id}
+                      onchange={handleChange}
+                      checked={isCliked}
+                    />
+                    <label
+                      class="slds-checkbox__label"
+                      for={product.Id}
+                      id={product.Id}
+                    >
+                      <span class="slds-checkbox_faux"></span>
+                      <span class="slds-form-element__label slds-assistive-text"
+                        >Select item 2</span
+                      >
+                    </label>
+                  </div>
+                </td>
+                <th data-label="Product Type" scope="row">
+                  <div class="slds-truncate" title={product.RecordType.Name}>
+                    <a href="#" tabindex="-1">{product.RecordType.Name}</a>
+                  </div>
+                </th>
+                <td data-label="Product Name">
+                  <div class="slds-truncate" title={product.Name}>
+                    {product.Name}
+                  </div>
+                </td>
+                <td data-label="Category">
+                  <div class="slds-truncate" title={product.category__c}>
+                    {product.category__c}
+                  </div>
+                </td>
+                <td data-label="Capacity">
+                  <div class="slds-truncate" title={product.capacity__c}>
+                    {product.capacity__c}
+                  </div>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </template>
+      <template if:false={productsSelected.length}>
+        <div class="slds-text-heading_small slds-text-align_center">
+          No Product Selected
+        </div>
+      </template>
+    </div>
+    <footer class="slds-card__footer">
+      <a class="slds-card__footer-action" href="#">
+        <span class="slds-assistive-text"></span>
+      </a>
+    </footer>
+  </article>
+</template>
